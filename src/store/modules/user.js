@@ -28,19 +28,34 @@ const mutations = {
 }
 
 const actions = {
-  // user login
-  login({ commit }, userInfo) {
-    const { username, password } = userInfo
-    return new Promise((resolve, reject) => {
-      login({ username: username.trim(), password: password }).then(response => {
-        const { data } = response
-        commit('SET_TOKEN', data.token)
-        setToken(data.token)
-        resolve()
-      }).catch(error => {
-        reject(error)
-      })
-    })
+  // 用户登录
+  async login({ commit }, userInfo) {
+    // 解构用户名和密码
+    const { username, password } = userInfo;
+
+    // return new Promise((resolve, reject) => {
+    //   login({ username: username.trim(), password: password }).then(response => {
+    //     const { data } = response
+    //     commit('SET_TOKEN', data.token)
+    //     setToken(data.token)
+    //     resolve()
+    //   }).catch(error => {
+    //     reject(error)
+    //   })
+    // })
+
+    // 改为async/await写法
+    let result = await login({ username: username.trim(), password: password });
+    // 这是是mock的数据
+    if(result.code==20000){
+      // 成功
+      commit('SET_TOKEN', result.data.token);
+      setToken(result.data.token);
+      return 'ok';
+    }else{
+      // 失败
+      return Promise.reject(new Error('faile'));
+    }
   },
 
   // get user info

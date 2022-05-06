@@ -15,6 +15,15 @@ import router from './router'
 import '@/icons' // icon
 import '@/permission' // permission control
 
+// 引入productAPI
+import API from '@/api/index';
+
+// 引入三级联动全局组件
+import CategorySelect from '@/components/CategorySelect';
+
+// 引入HintButton
+import HintButton from '@/components/HintButton';
+
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
@@ -33,7 +42,14 @@ Vue.use(ElementUI, { locale })
 // 如果想要中文版 element-ui，按如下方式声明
 // Vue.use(ElementUI)
 
+// 注册为全局组件
+Vue.component(CategorySelect.name,CategorySelect);
+Vue.component(HintButton.name,HintButton);
+
 Vue.config.productionTip = false
+
+// 将API挂载到原型上
+Vue.prototype.$API = API;
 
 new Vue({
   el: '#app',

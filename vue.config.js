@@ -36,7 +36,15 @@ module.exports = {
       warnings: false,
       errors: true
     },
-    before: require('./mock/mock-server.js')
+    // before: require('./mock/mock-server.js')
+    // 配置跨域代理
+    proxy: {
+      // VUE_APP_BASE_API = '/dev-api'开发环境中的
+      "/dev-api": {
+        target: "http://39.98.123.211",
+        pathRewrite: {"^/dev-api" : ""}
+      }
+    }
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that
